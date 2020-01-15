@@ -12,11 +12,15 @@ import java.io.IOException;
 @SpringBootApplication
 public class DemoApplication {
 
-    public static void main(String[] args) throws RestClientException, IOException {
+    public static void main(String[] args) throws RestClientException, IOException,InterruptedException {
         ApplicationContext ctx = SpringApplication.run(DemoApplication.class, args);
         ConsumerControllerClient consumerControllerClient = ctx.getBean(ConsumerControllerClient.class);
         System.out.println(consumerControllerClient);
-        consumerControllerClient.getEmployee();
+
+        for(int i=0; i<100; i++){
+            //Thread.sleep(60);
+            consumerControllerClient.getEmployee();
+        }
     }
 
     @Bean
