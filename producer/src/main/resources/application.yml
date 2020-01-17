@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: employee-producer
+  cloud:
+    #for spring cloud config
+    config:
+      label: master
+      uri: http://localhost:8888/
+  boot:
+    admin:
+      url: https://localhost:8079
+      username: admin
+      password: password
+
+eureka:
+  instance:
+    hostname: localhost
+    status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
+    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+
+    ##必要的admin配置
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka
+server:
+  port: 8081
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS

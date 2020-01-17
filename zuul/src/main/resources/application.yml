@@ -1,0 +1,35 @@
+server:
+  port: 8079
+
+spring:
+  application:
+    name: zuul-server
+  security:
+    user:
+      name: "admin"
+      password: "password"
+eureka:
+  instance:
+    hostname: localhost
+    status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
+    instance-id: zuul-apigateway(${spring.cloud.client.ipaddress}:${server.port})
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+
+    ##必要的admin配置
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka
+zuul:
+  routers:
+    sale:
+      path: /test/**
+      service-id: employee-consumer
+
+
+
