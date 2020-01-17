@@ -13,8 +13,6 @@ import java.io.IOException;
 
 @SpringBootApplication
 @EnableFeignClients
-//@EnableFeignClients("com.example.*")
-//@ComponentScan(basePackages = {"com.example.demo.service"})
 public class DemoApplication {
 
     public static void main(String[] args) throws RestClientException, IOException,InterruptedException {

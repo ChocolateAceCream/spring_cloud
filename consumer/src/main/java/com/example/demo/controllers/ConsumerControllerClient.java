@@ -3,13 +3,17 @@ package com.example.demo.controllers;
 import com.example.demo.domain.Employee;
 import com.example.demo.service.RemoteCallService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
 
 import java.io.IOException;
 
-@Controller
+@RestController
+@Configuration
 public class ConsumerControllerClient {
     //without using of Feign
     //@Autowired
@@ -20,12 +24,13 @@ public class ConsumerControllerClient {
     @Autowired
     private RemoteCallService loadBalancer;
 
-    public void getEmployee() throws RestClientException, IOException {
+    @RequestMapping("/get-employee")
+    public String getEmployee() throws RestClientException, IOException {
         try {
             Employee emp = loadBalancer.getData();
-            System.out.println(emp.getEmpId()+' '+emp.getName()+' '+emp.getDesignation()+" "+emp.getSalary());
+            return(emp.getEmpId()+' '+emp.getName()+' '+emp.getDesignation()+" "+emp.getSalary());
         } catch (Exception ex) {
-            System.out.println(ex);
+            return(ex.toString());
         }
         //List<ServiceInstance> instances = discoveryClient.getInstances("employee-producer");
         //ServiceInstance serviceInstance = instances.get(0);
