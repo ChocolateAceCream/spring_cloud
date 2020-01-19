@@ -3,7 +3,7 @@ spring:
     name: eureka-server
   boot:
     admin:
-      url: https://localhost:8079
+      url: https://192.168.1.15:8079
       username: admin
       password: password
 

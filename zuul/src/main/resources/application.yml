@@ -2,6 +2,10 @@ server:
   port: 8079
 
 spring:
+  cloud:
+    config:
+      uri: http://192.168.1.15:8888
+      label: master
   application:
     name: zuul-server
   security:
@@ -10,7 +14,7 @@ spring:
       password: "password"
 eureka:
   instance:
-    hostname: localhost
+    hostname: 192.168.1.15
     status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
     instance-id: zuul-apigateway(${spring.cloud.client.ipaddress}:${server.port})
     preferIpAddress: true
@@ -24,7 +28,7 @@ eureka:
 
   client:
     serviceUrl:
-      defaultZone: http://localhost:8090/eureka
+      defaultZone: http://192.168.1.15:8090/eureka
 zuul:
   routers:
     sale:
