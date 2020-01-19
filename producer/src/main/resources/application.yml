@@ -8,13 +8,13 @@ spring:
       uri: http://localhost:8888/
   boot:
     admin:
-      url: https://localhost:8079
+      url: https://192.168.1.15:8079
       username: admin
       password: password
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: 192.168.1.15
     status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
     instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
     preferIpAddress: true
@@ -28,7 +28,7 @@ eureka:
 
   client:
     serviceUrl:
-      defaultZone: http://localhost:8090/eureka
+      defaultZone: http://192.168.1.15:8090/eureka
 server:
   port: 8081
 
