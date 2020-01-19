@@ -46,10 +46,10 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-ribbon</artifactId>
-        </dependency>
+        </dependency> -->
 
         <!--used for sprintboot 1.x-->
         <!--<dependency>-->

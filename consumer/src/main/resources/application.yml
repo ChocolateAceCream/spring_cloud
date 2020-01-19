@@ -1,0 +1,45 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: employee-consumer
+  cloud:
+    #for spring cloud config
+    config:
+      label: master
+      uri: http://192.168.1.14:8888/
+  boot:
+    admin:
+      url: https://192.168.1.15:8079
+      username: admin
+      password: password
+
+eureka:
+  instance:
+    hostname: 192.168.1.15
+    status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
+    instanceId: ${spring.cloud.client.ipaddress}:${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+
+    ##必要的admin配置
+    metadata-map:
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.15:8090/eureka
+
+server:
+  port: 8092
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
