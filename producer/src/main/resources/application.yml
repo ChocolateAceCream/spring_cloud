@@ -5,7 +5,7 @@ spring:
     #for spring cloud config
     config:
       label: master
-      uri: http://localhost:8888/
+      uri: http://192.168.1.14:8888/
   boot:
     admin:
       url: https://192.168.1.15:8079
@@ -16,7 +16,7 @@ eureka:
   instance:
     hostname: 192.168.1.15
     status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
-    instanceId: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    instanceId: ${spring.cloud.client.ipaddress}:${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
@@ -29,6 +29,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://192.168.1.15:8090/eureka
+
 server:
   port: 8081
 
