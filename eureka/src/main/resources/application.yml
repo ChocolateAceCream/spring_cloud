@@ -1,19 +1,23 @@
-spring:
-  application:
-    name: eureka-server
-  boot:
-    admin:
-      url: https://192.168.1.15:8079
-      username: admin
-      password: password
-
 server:
   port: 8090
+spring:
+  application:
+      name: eureka
+  boot:
+    admin:
+      client:
+        url: http://192.168.1.15:8079 #server url
+        username: admin
+        password: password
+        instance:
+          service-base-url: http://localhost:8090/ # client url
 
 eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://192.168.1.15:${server.port}/eureka/
 
 management:
   endpoints:

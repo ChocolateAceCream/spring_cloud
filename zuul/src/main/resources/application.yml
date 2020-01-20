@@ -12,20 +12,13 @@ spring:
     user:
       name: "admin"
       password: "password"
+
 eureka:
   instance:
-    hostname: 192.168.1.15
-    status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
-    instance-id: zuul-apigateway(${spring.cloud.client.ipaddress}:${server.port})
-    preferIpAddress: true
-    leaseRenewalIntervalInSeconds: 10
-    leaseExpirationDurationInSeconds: 30
-
-    ##必要的admin配置
+    leaseRenewalIntervalInSeconds: 10 #服务刷新时间配置，每隔这个时间会主动心跳一次
     metadata-map:
-      user.name: ${spring.security.user.name}
-      user.password: ${spring.security.user.password}
-
+      user.name: ${spring.security.user.name}         #These two are needed so that the server
+      user.password: ${spring.security.user.password} #can access the protected client endpoints
   client:
     serviceUrl:
       defaultZone: http://192.168.1.15:8090/eureka
