@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 spring:
   application:
     name: employee-producer
@@ -5,33 +8,34 @@ spring:
     #for spring cloud config
     config:
       label: master
-      uri: http://192.168.1.14:8888/
+      uri: http://192.168.1.15:8888/
+    #srping boot admin config
   boot:
     admin:
       url: https://192.168.1.15:8079
       username: admin
       password: password
+      instance:
+          service-base-url: http://192.168.1.15:8081/ # 本项目的地址
 
 eureka:
   instance:
-    hostname: 192.168.1.15
     status-page-url: http://${spring.cloud.client.ipaddress}:${server.port}
-    instanceId: ${spring.cloud.client.ipaddress}:${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    # instanceId: ${spring.cloud.client.ipaddress}:${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    instanceId: producer
     preferIpAddress: true
     leaseRenewalIntervalInSeconds: 10
     leaseExpirationDurationInSeconds: 30
 
-    ##必要的admin配置
+  # the following config for eureka client is fetched from cloud config  
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.1.15:8090/eureka
+    #必要的admin配置
     metadata-map:
       user.name: ${spring.security.user.name}
       user.password: ${spring.security.user.password}
 
-  client:
-    serviceUrl:
-      defaultZone: http://192.168.1.15:8090/eureka
-
-server:
-  port: 8081
 
 management:
   endpoints:
