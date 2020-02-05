@@ -1,0 +1,15 @@
+server:
+    port: 8080
+spring:
+    rabbitmq:
+        host: 113.128.65.64
+        port: 7081
+        username: nuodi
+        password: 123qwe
+    cloud:
+        stream:
+            bindings:
+                employeeRegistrationChannel:
+                    destination: employeeRegistrations
+            default:
+                contentType: application/json
