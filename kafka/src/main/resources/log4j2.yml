@@ -1,0 +1,32 @@
+log4j:
+  rootLogger: debug,stdout,D,E,logstash
+
+### 输出信息到控制抬 ###
+  appender: 
+    stdout：org.apache.log4j.ConsoleAppender
+      Target: System.out
+      layout: org.apache.log4j.PatternLayout
+          ConversionPattern: [%-5p] %d{yyyy-MM-dd HH:mm:ss,SSS} method:%l%n%m%n
+
+### 输出DEBUG 级别以上的日志到= ~/spring_cloud/kafka/debug.log###
+    D: org.apache.log4j.DailyRollingFileAppender
+      File: ~/spring_cloud/kafka/logs/debug.log
+      Append: true
+      Threshold: DEBUG 
+      layout: org.apache.log4j.PatternLayout
+        ConversionPattern: %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
+
+### 输出ERROR 级别以上的日志到=/Users/bee/Documents/elk/log4j/error.log  ###
+    E: org.apache.log4j.DailyRollingFileAppender
+      File: ~/spring_cloud/kafka/error.log 
+      Append: true
+      Threshold: ERROR 
+      layout: org.apache.log4j.PatternLayout
+        ConversionPattern: %-d{yyyy-MM-dd HH:mm:ss}  [ %t:%r ] - [ %p ]  %m%n
+
+#输出日志到logstash
+    logstash: org.apache.log4j.net.SocketAppender
+      RemoteHost: 127.0.0.1
+      port: 4560
+      ReconnectionDelay: 60000
+      LocationInfo: true
