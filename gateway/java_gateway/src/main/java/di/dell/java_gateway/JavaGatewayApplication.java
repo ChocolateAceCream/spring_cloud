@@ -9,4 +9,9 @@ public class JavaGatewayApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(JavaGatewayApplication.class, args);
 	}
+
+	// @Bean
+	// public CustomFilter customFilter() {
+	// 	return new CustomFilter();
+	// }
 }
