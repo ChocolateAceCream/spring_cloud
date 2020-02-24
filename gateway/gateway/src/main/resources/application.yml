@@ -1,0 +1,15 @@
+server:
+    port: 9506
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: employeeModule
+          uri: http://localhost:9408/
+          predicates:
+          - Path=/employee/**
+        - id: consumerModule
+          uri: http://localhost:9407/
+          predicates:
+          - Path=/consumer/**
