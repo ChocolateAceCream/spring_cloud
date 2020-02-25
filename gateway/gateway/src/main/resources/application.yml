@@ -4,6 +4,8 @@ server:
 spring:
   cloud:
     gateway:
+      default-filters:
+        - name: GlobalFilter
       routes:
         - id: employeeModule
           uri: http://localhost:9408/
@@ -12,11 +14,13 @@ spring:
           filters: 
           - AddRequestHeader=first-request, first-request-headers
           - AddResponseHeader=first-request,r-header-config
+          - CustomFilterFactory
           
         - id: consumerModule
           uri: http://localhost:9407/
           predicates:
           - Path=/consumer/**
           filters:
-          - AddRequestHeader=second-rquest, second-request-header-prefilter
+          - AddRequestHeader=second-request, second-request-header-prefilter
           - AddResponseHeader=second-request, second-request-header-post-filter
+          - CustomFilterFactory
