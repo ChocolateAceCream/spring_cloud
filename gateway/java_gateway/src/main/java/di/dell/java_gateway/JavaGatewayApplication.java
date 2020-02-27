@@ -5,13 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.Bean;
 
-import reactor.core.publisher.Mono;
-import di.dell.java_gateway.config.TokenFilter;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 @SpringBootApplication
 @ComponentScan("di.dell.java_gateway.config")
-
+@EnableEurekaClient
+@EnableHystrix
 public class JavaGatewayApplication {
 
 	public static void main(String[] args) {

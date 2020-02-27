@@ -12,21 +12,34 @@ public class GatewayConfigBean {
         return builder.routes()
             .route(
                 r -> r.path("/employee/**")
-                .filters(f->f.filter(new RequestTimeFilter())
+                .filters(
+                    f -> f
+                        // .filter(new RequestTimeFilter())
                         .addRequestHeader("first-request","first-request-header")
-                        .addResponseHeader("first-response","first-response-header")) 
-                .uri("http://localhost:9408")
+                        .addResponseHeader("first-response","first-response-header")
+                        .hystrix(
+                            h -> h.setName("Hystrix").setFallbackUri("forward:/fallback/message")
+                        )
+                ) 
+                .uri("lb://FIRST-SERVICE")
                 .id("employeeModule")
             )
 
             .route( 
                 r-> r.path("/consumer/**")
-                .filters(f->f.filter(new RequestTimeFilter())
+                .filters(f->f
+                            .hystrix(
+                                h -> h
+                                    .setName("Hystrix")
+                                    .setFallbackUri("forward:/fallback/message")
+                            )
+                    .filter(new RequestTimeFilter())
                     .addRequestHeader("second-request","second-request-header")
                     .addResponseHeader("second-response","second-response-header"))  
-                .uri("http://localhost:9407")
+                .uri("lb://SECOND-SERVICE")
                 .id("consumerModule")
             )
             .build();
     }
+
 }

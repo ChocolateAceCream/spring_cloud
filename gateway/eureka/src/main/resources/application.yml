@@ -1,0 +1,26 @@
+server:
+  servlet:
+    context-path: /
+  port: 9505
+spring:
+  application:
+    name: eurekaserver
+logging:
+  config: classpath:log4j2.yml
+eureka:
+  server:
+    #服务器保护机制
+    #renewal-percent-threshold: 0.49
+    enable-self-preservation: true
+  client:
+    #自我是否注册
+    register-with-eureka: false
+    #是否从Eureka Server获取注册信息,集群模式下改为true
+    fetch-registry: false
+    service-url:
+      #注册地址，非主页访问地址（eureka集群配置时，这是是双向指向，即交叉指向）
+      #defaultZone: http://127.0.0.1:9001/eureka/
+      defaultZone: http://192.168.1.15:9505/eureka/
+    #从eureka集群更新信息的时间间隔
+    eureka-service-url-poll-interval-seconds: 60
+    registry-fetch-interval-seconds: 5

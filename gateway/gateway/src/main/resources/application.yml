@@ -1,26 +1,40 @@
 server:
     port: 9506
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9505/eureka
 spring:
+  application:
+    name: gateway-config-service
   cloud:
     gateway:
       default-filters:
         - name: GlobalFilter
       routes:
         - id: employeeModule
-          uri: http://localhost:9408/
+          uri: lb://FIRST-SERVICE
           predicates:
           - Path=/employee/**
           filters: 
           - AddRequestHeader=first-request, first-request-headers
           - AddResponseHeader=first-request,r-header-config
           - CustomFilterFactory
+          - name: Hystrix
+            args:
+              name: fallbackCommand
+              fallbackUri: forward:/fallback/message
           
         - id: consumerModule
-          uri: http://localhost:9407/
+          uri: lb://SECOND-SERVICE
           predicates:
           - Path=/consumer/**
           filters:
           - AddRequestHeader=second-request, second-request-header-prefilter
           - AddResponseHeader=second-request, second-request-header-post-filter
           - CustomFilterFactory
+          - name: Hystrix
+            args:
+              name: fallbackCommand
+              fallbackUri: forward:/fallback/message

@@ -3,3 +3,8 @@ spring:
     name: first-service
 server:
   port: 9408
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9505/eureka
